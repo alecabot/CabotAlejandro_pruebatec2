@@ -13,11 +13,11 @@ Este proyecto es una aplicación Java que utiliza jSP, JPA Y Maven como como her
 
 1. Clona el repositorio:
     ```sh
-    git clone https://github.com/tu-usuario/tu-repositorio.git
+    git clone https://github.com/alecabot/CabotAlejandro_pruebatec2.git
     ```
 2. Navega al directorio del proyecto:
     ```sh
-    cd tu-repositorio
+    cd CabotAlejandro_pruebatec2
     ```
 3. Compila el proyecto y descarga las dependencias:
     ```sh
