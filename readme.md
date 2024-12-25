@@ -40,11 +40,34 @@ Para ejecutar la aplicación, sigue estos pasos:
     - Selecciona el servidor Tomcat configurado cuando se te solicite.
 Esto iniciará el servidor Tomcat y desplegará tu aplicación.
 
+## Funcionamiento
 
+1. **Arquitectura del Proyecto**:
+   - **JSP**: Las páginas JSP (`index.jsp`) se utilizan para generar contenido HTML dinámico.
+   - **Servlets**: Los servlets (`SvCiudadanos`, `SvTurnos`) manejan las solicitudes HTTP y coordinan la lógica de negocio.
+   - **ControladoraPersistencia**: Clase que maneja la persistencia de datos, probablemente interactuando con una base de datos.
 
+2. **Flujo de la Aplicación**:
+   - **Inicio**: La página principal (`index.jsp`) se carga y muestra formularios para ingresar datos de ciudadanos y turnos.
+   - **Formulario de Ciudadanos**:
+     - El usuario ingresa el nombre de un ciudadano y envía el formulario.
+     - El formulario envía una solicitud POST al servlet `SvCiudadanos`.
+     - El servlet procesa la solicitud, guarda el ciudadano en la base de datos y redirige de nuevo a `index.jsp`.
+     - Si hay errores, se muestran mensajes de error en la página.
+   - **Formulario de Turnos**:
+     - El usuario ingresa los detalles de un turno y selecciona un ciudadano de la lista desplegable.
+     - El formulario envía una solicitud POST al servlet `SvTurnos`.
+     - El servlet procesa la solicitud, guarda el turno en la base de datos y redirige de nuevo a `index.jsp`.
+     - Si hay errores, se muestran mensajes de error en la página.
+   - **Visualización de Datos**:
+     - La página `index.jsp` muestra tablas con los ciudadanos y turnos registrados.
+     - Los datos se obtienen de la base de datos a través de la `ControladoraPersistencia` y se almacenan en la sesión o en el request.
 
+3. **Componentes Clave**:
+   - **ControladoraPersistencia**: Clase que maneja la lógica de acceso a datos.
+   - **Ciudadano**: Clase que representa a un ciudadano.
+   - **Turno**: Clase que representa un turno.
+   - **Servlets**: Clases que manejan las solicitudes HTTP (`SvCiudadanos`, `SvTurnos`).
 
-
-
-Esto añadirá el servidor Tomcat a tu entorno de desarrollo en NetBeans.
+Este es un resumen general del funcionamiento del proyecto. La interacción principal se da entre las páginas JSP, los servlets y la capa de persistencia para manejar los datos de ciudadanos y turnos.
 
