@@ -1,4 +1,4 @@
-# Proyecto Java con Maven
+# Proyecto Java EE
 
 ## Descripción
 
@@ -7,7 +7,6 @@ Este proyecto es una aplicación Java que utiliza jSP, JPA Y Maven como como her
 ## Requisitos
 
 - Java 17 o superior
-- Maven 3.6.0 o superior
 - netbeans 19
 
 ## Instalación
@@ -27,6 +26,25 @@ Este proyecto es una aplicación Java que utiliza jSP, JPA Y Maven como como her
 
 ## Uso
 
-Para ejecutar la aplicación, seleccione el proyecto clonado:
-```sh
-mvn exec:java -Dexec.mainClass="com.tu.paquete.MainClass"
+Para ejecutar la aplicación, sigue estos pasos:
+
+1. Selecciona el proyecto clonado en tu netbeans.
+2. Configura un servidor Tomcat en tu IDE (si no lo tienes):
+   En NetBeans, puedes configurar un servidor Tomcat siguiendo estos pasos:
+    - Ve a `Tools > Servers`.
+    - Haz clic en `Add Server`.
+    - Selecciona `Apache Tomcat` y haz clic en `Next`.
+    - Proporciona la ruta de instalación de Tomcat y haz clic en `Finish`.
+4. Ejecuta la aplicación:
+    - Haz clic en el botón de ejecutar (ícono de play) en tu IDE.
+    - Selecciona el servidor Tomcat configurado cuando se te solicite.
+Esto iniciará el servidor Tomcat y desplegará tu aplicación.
+
+
+
+
+
+
+
+Esto añadirá el servidor Tomcat a tu entorno de desarrollo en NetBeans.
+
