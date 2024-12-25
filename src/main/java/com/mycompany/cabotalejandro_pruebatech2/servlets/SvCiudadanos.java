@@ -26,6 +26,10 @@ public class SvCiudadanos extends HttpServlet {
     /**
      * Maneja las solicitudes GET.
      * Obtiene la lista de ciudadanos y la establece en la solicitud para mostrarla en el JSP.
+     * @param request
+     * @param response
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -43,6 +47,10 @@ public class SvCiudadanos extends HttpServlet {
     /**
      * Maneja las solicitudes POST.
      * Crea un nuevo ciudadano después de validar los campos.
+     * @param request
+     * @param response
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
