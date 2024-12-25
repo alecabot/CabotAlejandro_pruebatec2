@@ -2,12 +2,13 @@
 
 ## Descripción
 
-Este proyecto es una aplicación Java que utiliza Maven como herramienta de gestión de dependencias y construcción. La aplicación [describe brevemente la funcionalidad principal de tu aplicación].
+Este proyecto es una aplicación Java que utiliza jSP, JPA Y Maven como como herramienta de gestión de dependencias y construcción. Esta aplicación se dedica a gestionar turnos, permitiendo la creación, visualización y filtrado de turnos y ciudadanos..
 
 ## Requisitos
 
-- Java 11 o superior
+- Java 17 o superior
 - Maven 3.6.0 o superior
+- netbeans 19
 
 ## Instalación
 
@@ -26,6 +27,6 @@ Este proyecto es una aplicación Java que utiliza Maven como herramienta de gest
 
 ## Uso
 
-Para ejecutar la aplicación, usa el siguiente comando:
+Para ejecutar la aplicación, seleccione el proyecto clonado:
 ```sh
 mvn exec:java -Dexec.mainClass="com.tu.paquete.MainClass"
