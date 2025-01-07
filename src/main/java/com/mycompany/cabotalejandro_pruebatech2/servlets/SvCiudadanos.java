@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+import javax.servlet.annotation.WebServlet; 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,10 +57,11 @@ public class SvCiudadanos extends HttpServlet {
             throws ServletException, IOException {
         // Obtener el nombre del ciudadano desde la solicitud
         String nombre = request.getParameter("nombre_ciudadano").trim();
-        Ciudadano ciudadano = new Ciudadano(nombre);
+        String apellido = request.getParameter("apellido_ciudadano").trim();
+
         
         // Validar los campos del formulario
-        Map<String, String> errores = comprobarCampos(nombre);
+        Map<String, String> errores = comprobarCampos(nombre, apellido);
         
         // Si hay errores, establecerlos en la solicitud y redirigir al JSP
         if (!errores.isEmpty()) {
@@ -68,6 +69,8 @@ public class SvCiudadanos extends HttpServlet {
             request.getRequestDispatcher("index.jsp").forward(request, response);
             return;
         }
+        
+        Ciudadano ciudadano = new Ciudadano(nombre, apellido);
         
         // Crear una nueva sesión y establecer un atributo de éxito
         HttpSession session = request.getSession();
@@ -83,17 +86,26 @@ public class SvCiudadanos extends HttpServlet {
     /**
      * Comprueba los campos del formulario.
      * @param nombre El nombre del ciudadano.
+     * @param apellido El nombre del ciudadano.
      * @return Un mapa con los errores encontrados.
      */
-    public Map<String, String> comprobarCampos(String nombre) {
+    public Map<String, String> comprobarCampos(String nombre, String apellido) {
         Map<String, String> errores = new HashMap<>();
         // Validar que el nombre no sea nulo y contenga solo caracteres
-        if (!nombre.matches("^[A-Za-z\\s]+$")) {
-            errores.put("nombre", "El nombre no debe ser nulo y debe contener solo caracteres");
+        // Define la expresión regular una vez
+        String regexApellidoNombre = "^[A-Za-z\\s]+$";
+
+        if (!nombre.matches(regexApellidoNombre)) {
+            errores.put("nombre", "El nombre no debe ser nulo y debe contener solo letras");
         }
+
+        if (!apellido.matches(regexApellidoNombre)) {
+            errores.put("apellido", "El apellido no debe ser nulo y debe contener solo letras");
+        }
+
         // Comprobar si el nombre ya existe
-        if (comprobarNombreDuplicado(nombre)) {
-            errores.put("nombre", "Ese nombre ya existe");
+        if (nombreApellidoDuplicado(nombre, apellido)) {
+            errores.put("nombreDuplicado", "Ese nombre con ese apellido ya existe");
         }
         return errores;
     }
@@ -101,12 +113,14 @@ public class SvCiudadanos extends HttpServlet {
     /**
      * Comprueba si el nombre del ciudadano ya existe en la base de datos.
      * @param nombre El nombre del ciudadano.
-     * @return true si el nombre ya existe, false en caso contrario.
+     * @param apellido El nombre del ciudadano.
+     * @return true si el nombre y apellido ya existe, false en caso contrario.
      */
-    public Boolean comprobarNombreDuplicado(String nombre){
+    public Boolean nombreApellidoDuplicado(String nombre, String apellido){
         return controlPersi.traerCiudadanos().stream()
                 .anyMatch(persona ->
-                        persona.getNombre().equalsIgnoreCase(nombre)
+                        persona.getNombre().equalsIgnoreCase(nombre) &&
+                        persona.getApellido().equalsIgnoreCase(apellido)       
                 );
     }
     
