@@ -22,14 +22,17 @@ public class Ciudadano {
     private Long id;
 
     private String nombre;
+    
+    private String apellido;
 
     @OneToMany(mappedBy = "ciudadano")
     private List<Turno> turnos;
 
     public Ciudadano() {}
 
-    public Ciudadano(String nombre) {
+    public Ciudadano(String nombre, String apellido) {
         this.nombre = nombre;
+        this.apellido = apellido;
     }
 
     public Long getId() {
@@ -44,6 +47,10 @@ public class Ciudadano {
         return nombre;
     }
 
+    public String getApellido() {
+        return apellido;
+    }
+    
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }

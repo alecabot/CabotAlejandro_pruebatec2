@@ -45,6 +45,7 @@ public class SvTurnos extends HttpServlet {
         String estado = request.getParameter("estado_filtro");
         
         // Validar los campos de filtro
+        
         Map<String, String> errores = comprobarCamposFiltros(fecha, estado);
         
         // Si hay errores, establecerlos en la solicitud y redirigir al JSP
@@ -55,7 +56,10 @@ public class SvTurnos extends HttpServlet {
         }
         
         // Filtrar los turnos por fecha y estado
-        List<Turno> listTurnos = controlPersi.FiltrarPorfechaEstado(LocalDate.parse(fecha, formatter), EstadoTurno.valueOf(estado));
+        List<Turno> listTurnos = controlPersi.FiltrarPorfechaEstado(
+                LocalDate.parse(fecha, formatter),
+                EstadoTurno.valueOf(estado)
+        );
         
         // Establecer los resultados en la solicitud para que se muestren en el JSP
         request.setAttribute("turnos", listTurnos);
@@ -152,8 +156,9 @@ public class SvTurnos extends HttpServlet {
         if (!esFechaValida(fecha)) {
             errores.put("fechaFiltro", "La fecha no es valida");
         }
+        System.out.println(estado);
         // Validar que el estado sea válido
-        if (!EstadoTurno.contiene(estado)) {
+        if (!estado.isEmpty() && !EstadoTurno.contiene(estado)) {
             errores.put("estadoFiltro", "estado no valido");
         }
         return errores;

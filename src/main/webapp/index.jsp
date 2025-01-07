@@ -16,7 +16,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Integrador</title>
+        <title>Gestionturnos</title>
         <!-- Agregar estilos de Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">        
     </head>
@@ -32,6 +32,17 @@
                         ${requestScope.errores.nombre != null ? requestScope.errores.nombre : ""}
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="nombre">Apellido:</label>
+                    <input type="text" class="form-control" id="apellido_ciudadano" name="apellido_ciudadano">
+                    <div class="text-danger">
+                        ${requestScope.errores.apellido != null ? requestScope.errores.apellido : ""}
+                    </div>
+                </div>
+                <div class="text-danger">
+                        ${requestScope.errores.nombreDuplicado != null ? requestScope.errores.nombreDuplicado : ""}
+                </div>
+                <br>
                 <button type="submit" class="btn btn-primary">Guardar</button>
                     
             </form>
@@ -57,6 +68,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
+                                <th>Apellido</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,6 +76,7 @@
                                 <tr>
                                     <td><%= ciudadano.getId() %></td>
                                     <td><%= ciudadano.getNombre() %></td>
+                                    <td><%= ciudadano.getApellido() %></td>
                                 </tr>
                             <% } %>
                         </tbody>
@@ -112,7 +125,7 @@
                     <select class="form-control" id="ciudadano_turno" name="ciudadano_turno">
                         <option value="">Seleccione una opcion</option>  
                         <% for (Ciudadano ciudadano : (List<Ciudadano>) session.getAttribute("ciudadanos")) { %>
-                            <option value="<%= ciudadano.getId() %>"><%= ciudadano.getNombre() %></option>
+                            <option value="<%= ciudadano.getId() %>"><%= ciudadano.getNombre() + " " +  ciudadano.getApellido()%></option>
                         <% } %>
                     </select>
                     <div class="text-danger">
@@ -130,16 +143,20 @@
                 <c:remove var="crear_turno" scope="session"/>
             </c:if>
             <hr>
+            <h2>Listar turnos</h2>
             <form action="SvTurnos" method="GET" class="form-inline">
+                <label for="fecha">fecha: </label>
                 <div class="form-group">
                     <input type="date" class="form-control" placeholder="Fecha" name="fecha_filtro">
                     <div class="text-danger">
                         ${requestScope.errores.fechaFiltro != null ? requestScope.errores.fechaFiltro : ""}
                     </div>
                 </div>
+                    
                 <div class="form-group">
+                    <label for="fecha">estado: </label>
                     <select class="form-control" id="estado_turno" name="estado_filtro">
-                        <option value="">Seleccione una opcion</option>
+                        <option value="NINGUNO">Seleccione una opcion</option>
                         <option value="EN_ESPERA">en espera</option>
                         <option value="YA_ATENDIDO">ya atendido</option>
                     </select>
@@ -163,6 +180,7 @@
                                 <th>Descripcion</th>
                                 <th>Estado</th>
                                 <th>Nombre Ciudadano</th> 
+                                <th>Apellido Ciudadano</th> 
                             </tr>
                         </thead>
                         <tbody>
@@ -173,6 +191,7 @@
                                     <td><%= turno.getDescripcion() %></td>   
                                     <td><%= turno.getEstado() %></td>
                                     <td><%= turno.getCiudadano().getNombre() %></td>
+                                    <td><%= turno.getCiudadano().getApellido() %></td>
                                 </tr>
                             <% } %>
                         </tbody>

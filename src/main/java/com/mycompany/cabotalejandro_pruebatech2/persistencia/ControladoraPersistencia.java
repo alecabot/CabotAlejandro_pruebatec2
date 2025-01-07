@@ -82,7 +82,7 @@ public class ControladoraPersistencia {
     public List<Turno> FiltrarPorfechaEstado(LocalDate fecha, EstadoTurno estado) {
        return traerTurnos().stream()
                .filter(turno -> turno.getFecha().equals(fecha) )
-               .filter(turno -> turno.getEstado() == estado)
+               .filter(turno -> estado == EstadoTurno.NINGUNO || turno.getEstado() == estado)
                .toList();
     }
 }
