@@ -23,19 +23,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet que maneja las solicitudes relacionadas con los turnos.
- * Se encarga de obtener, crear y validar turnos.
+ * Servlet que maneja las solicitudes relacionadas con los turnos. Se encarga de
+ * obtener, crear y validar turnos.
  */
 @WebServlet(name = "SvTurnos", urlPatterns = {"/SvTurnos"})
 public class SvTurnos extends HttpServlet {
+
     // Formateador de fechas
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     // Controladora de persistencia para manejar la lógica de negocio
     ControladoraPersistencia controlPersi = new ControladoraPersistencia();
-    
+
     /**
-     * Maneja las solicitudes GET.
-     * Filtra los turnos por fecha y estado y los establece en la solicitud para mostrar en el JSP.
+     * Maneja las solicitudes GET. Filtra los turnos por fecha y estado y los
+     * establece en la solicitud para mostrar en el JSP.
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -43,34 +44,34 @@ public class SvTurnos extends HttpServlet {
         // Obtener los parámetros de fecha y estado desde la solicitud
         String fecha = request.getParameter("fecha_filtro").trim();
         String estado = request.getParameter("estado_filtro");
-        
+
         // Validar los campos de filtro
-        
         Map<String, String> errores = comprobarCamposFiltros(fecha, estado);
-        
+
         // Si hay errores, establecerlos en la solicitud y redirigir al JSP
         if (!errores.isEmpty()) {
             request.setAttribute("errores", errores);
             request.getRequestDispatcher("index.jsp").forward(request, response);
             return;
         }
-        
+
+        // Filtrar los turnos por fecha y estado
         // Filtrar los turnos por fecha y estado
         List<Turno> listTurnos = controlPersi.FiltrarPorfechaEstado(
-                LocalDate.parse(fecha, formatter),
-                EstadoTurno.valueOf(estado)
+                (!fecha.isEmpty()) ? LocalDate.parse(fecha, formatter) : null,
+                (!estado.isEmpty()) ? EstadoTurno.valueOf(estado) : null
         );
-        
+
         // Establecer los resultados en la solicitud para que se muestren en el JSP
         request.setAttribute("turnos", listTurnos);
-        
+
         // Redirigir de vuelta al formulario
-        request.getRequestDispatcher("index.jsp").forward(request, response); 
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     /**
-     * Maneja las solicitudes POST.
-     * Crea un nuevo turno después de validar los campos.
+     * Maneja las solicitudes POST. Crea un nuevo turno después de validar los
+     * campos.
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -81,37 +82,38 @@ public class SvTurnos extends HttpServlet {
         String descripcion = request.getParameter("descripcion_turno").trim();
         String estado = request.getParameter("estado_turno");
         String idCiudadano = request.getParameter("ciudadano_turno");
-        
+
         // Validar los campos del formulario
         Map<String, String> errores = comprobarCampos(numero, fecha, descripcion, estado, idCiudadano);
-        
+
         // Si hay errores, establecerlos en la solicitud y redirigir al JSP
         if (!errores.isEmpty()) {
             request.setAttribute("errores", errores);
             request.getRequestDispatcher("index.jsp").forward(request, response);
             return;
         }
-        
+
         // Crear un nuevo turno y establecer sus atributos
         Turno turno = new Turno();
         turno.setNumero(Integer.valueOf(numero));
         turno.setFecha(LocalDate.parse(fecha, formatter));
         turno.setDescripcion(descripcion);
         turno.setEstado(EstadoTurno.valueOf(estado));
-        
+
         // Crear una nueva sesión y establecer un atributo de éxito
         HttpSession session = request.getSession();
         session.setAttribute("crear_turno", "turno creado correctamente");
-        
+
         // Crear el turno en la base de datos
         controlPersi.crearTurno(turno, Long.valueOf(idCiudadano));
-        
+
         // Redirigir al JSP
         response.sendRedirect("index.jsp");
     }
 
     /**
      * Comprueba los campos del formulario.
+     *
      * @param numero El número del turno.
      * @param fecha La fecha del turno.
      * @param descripcion La descripción del turno.
@@ -146,6 +148,7 @@ public class SvTurnos extends HttpServlet {
 
     /**
      * Comprueba los campos de los filtros.
+     *
      * @param fecha La fecha del filtro.
      * @param estado El estado del filtro.
      * @return Un mapa con los errores encontrados.
@@ -153,7 +156,7 @@ public class SvTurnos extends HttpServlet {
     public Map<String, String> comprobarCamposFiltros(String fecha, String estado) {
         Map<String, String> errores = new HashMap<>();
         // Validar que la fecha sea válida
-        if (!esFechaValida(fecha)) {
+        if (!fecha.isEmpty() && !esFechaValida(fecha)) {
             errores.put("fechaFiltro", "La fecha no es valida");
         }
         System.out.println(estado);
@@ -166,16 +169,18 @@ public class SvTurnos extends HttpServlet {
 
     /**
      * Comprueba si el ID del ciudadano es válido.
+     *
      * @param idCiudadano El ID del ciudadano.
      * @return true si el ID es válido, false en caso contrario.
      */
-    public Boolean comprobarId(String idCiudadano){
+    public Boolean comprobarId(String idCiudadano) {
         return controlPersi.traerCiudadanos().stream()
                 .anyMatch(ciudadano -> ciudadano.getId().toString().equals(idCiudadano));
     }
 
     /**
      * Comprueba si la fecha es válida.
+     *
      * @param fecha La fecha a validar.
      * @return true si la fecha es válida, false en caso contrario.
      */

@@ -5,6 +5,7 @@
 package com.mycompany.cabotalejandro_pruebatech2.logica;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,11 +26,11 @@ public class Ciudadano {
     
     private String apellido;
 
-    @OneToMany(mappedBy = "ciudadano")
+    @OneToMany(mappedBy = "ciudadano", cascade = CascadeType.ALL)
     private List<Turno> turnos;
 
     public Ciudadano() {}
-
+    
     public Ciudadano(String nombre, String apellido) {
         this.nombre = nombre;
         this.apellido = apellido;

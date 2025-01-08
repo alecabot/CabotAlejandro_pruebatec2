@@ -9,7 +9,6 @@ package com.mycompany.cabotalejandro_pruebatech2.logica;
  * @author aleja
  */
 public enum EstadoTurno {
-    NINGUNO,
     EN_ESPERA,
     YA_ATENDIDO;
 
