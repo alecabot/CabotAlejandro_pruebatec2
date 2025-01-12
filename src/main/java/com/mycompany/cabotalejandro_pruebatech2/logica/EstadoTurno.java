@@ -12,6 +12,7 @@ public enum EstadoTurno {
     EN_ESPERA,
     YA_ATENDIDO;
 
+    //comprueba si el parametro que se le pasa, esta en el Enum
     public static boolean contiene(String valor) {
         for (EstadoTurno estado : EstadoTurno.values()) {
             if (estado.name().equalsIgnoreCase(valor)) {

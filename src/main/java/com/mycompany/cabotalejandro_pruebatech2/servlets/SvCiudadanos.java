@@ -55,7 +55,7 @@ public class SvCiudadanos extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Obtener el nombre del ciudadano desde la solicitud
+        // Obtener el nombre y apellido del ciudadano desde la solicitud
         String nombre = request.getParameter("nombre_ciudadano").trim();
         String apellido = request.getParameter("apellido_ciudadano").trim();
 
@@ -103,7 +103,6 @@ public class SvCiudadanos extends HttpServlet {
             errores.put("apellido", "El apellido no debe ser nulo y debe contener solo letras");
         }
 
-        // Comprobar si el nombre ya existe
         if (nombreApellidoDuplicado(nombre, apellido)) {
             errores.put("nombreDuplicado", "Ese nombre con ese apellido ya existe");
         }

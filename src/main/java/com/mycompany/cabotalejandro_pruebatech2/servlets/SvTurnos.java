@@ -4,7 +4,7 @@
  */
 package com.mycompany.cabotalejandro_pruebatech2.servlets;
 
-import com.mycompany.cabotalejandro_pruebatech2.logica.Ciudadano;
+
 import com.mycompany.cabotalejandro_pruebatech2.logica.EstadoTurno;
 import com.mycompany.cabotalejandro_pruebatech2.logica.Turno;
 import com.mycompany.cabotalejandro_pruebatech2.persistencia.ControladoraPersistencia;
@@ -55,7 +55,6 @@ public class SvTurnos extends HttpServlet {
             return;
         }
 
-        // Filtrar los turnos por fecha y estado
         // Filtrar los turnos por fecha y estado
         List<Turno> listTurnos = controlPersi.FiltrarPorfechaEstado(
                 (!fecha.isEmpty()) ? LocalDate.parse(fecha, formatter) : null,
@@ -123,23 +122,22 @@ public class SvTurnos extends HttpServlet {
      */
     public Map<String, String> comprobarCampos(String numero, String fecha, String descripcion, String estado, String idCiudadano) {
         Map<String, String> errores = new HashMap<>();
-        // Validar que el número no sea nulo y contenga solo números
         if (!numero.matches("^[0-9]+$")) {
             errores.put("numero", "El numero no debe ser nulo y debe contener solo numeros");
         }
-        // Validar que la fecha sea válida
+
         if (!esFechaValida(fecha)) {
             errores.put("fecha", "La fecha no es valida");
         }
-        // Validar que el estado sea válido
+
         if (!EstadoTurno.contiene(estado)) {
             errores.put("estado", "estado no valido");
         }
-        // Validar que la descripción no sea nula
+
         if (descripcion.isEmpty()) {
             errores.put("descripcion", "La descripcion no debe ser nulo");
         }
-        // Validar que el ID del ciudadano sea válido
+
         if (!comprobarId(idCiudadano) || idCiudadano.isEmpty()) {
             errores.put("ciudadano", "ciudadano no valido");
         }
@@ -155,12 +153,12 @@ public class SvTurnos extends HttpServlet {
      */
     public Map<String, String> comprobarCamposFiltros(String fecha, String estado) {
         Map<String, String> errores = new HashMap<>();
-        // Validar que la fecha sea válida
+
         if (!fecha.isEmpty() && !esFechaValida(fecha)) {
             errores.put("fechaFiltro", "La fecha no es valida");
         }
         System.out.println(estado);
-        // Validar que el estado sea válido
+
         if (!estado.isEmpty() && !EstadoTurno.contiene(estado)) {
             errores.put("estadoFiltro", "estado no valido");
         }

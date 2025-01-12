@@ -1,5 +1,3 @@
-Tu aplicación se dedica a gestionar turnos, permitiendo la creación, visualización y filtrado de turnos y ciudadanos. Aquí tienes un `README.md` que describe tu proyecto:
-
 # Gestión de Turnos
 
 Esta aplicación se dedica a gestionar turnos, permitiendo la creación, visualización y filtrado de turnos y ciudadanos.

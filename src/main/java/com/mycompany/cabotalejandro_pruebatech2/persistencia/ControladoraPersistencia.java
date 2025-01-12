@@ -79,6 +79,7 @@ public class ControladoraPersistencia {
         }
     }    
 
+    //devuelve una lista filtrando por persona y estado 
     public List<Turno> FiltrarPorfechaEstado(LocalDate fecha, EstadoTurno estado) {
        return traerTurnos().stream()
                .filter(turno -> fecha == null || turno.getFecha().equals(fecha) )
