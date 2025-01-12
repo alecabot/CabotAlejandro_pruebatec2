@@ -177,6 +177,7 @@
                             <th>Descripcion</th>
                             <th>Estado</th>
                             <th>Nombre Ciudadano</th> 
+                            <th>Apellido Ciudadano</th> 
                         </tr>
                     </thead>
                     <tbody>
@@ -187,6 +188,7 @@
                             <td><%= turno.getDescripcion()%></td>   
                             <td><%= turno.getEstado()%></td>
                             <td><%= turno.getCiudadano().getNombre()%></td>
+                            <td><%= turno.getCiudadano().getApellido()%></td>
                         </tr>
                         <% } %>
                     </tbody>
